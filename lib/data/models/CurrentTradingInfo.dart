@@ -1,0 +1,191 @@
+// To parse this JSON data, do
+//
+//     final crypto = cryptoFromJson(jsonString);
+
+import 'package:meta/meta.dart';
+import 'dart:convert';
+
+
+class CurrentTradingInfo {
+    CurrentTradingInfo({
+        required this.type,
+        required this.market,
+        required this.fromsymbol,
+        required this.tosymbol,
+        required this.flags,
+        required this.price,
+        required this.lastupdate,
+        required this.lastvolume,
+        required this.lastvolumeto,
+        required this.lasttradeid,
+        required this.volumeday,
+        required this.volumedayto,
+        required this.volume24Hour,
+        required this.volume24Hourto,
+        required this.openday,
+        required this.highday,
+        required this.lowday,
+        required this.open24Hour,
+        required this.high24Hour,
+        required this.low24Hour,
+        required this.volumehour,
+        required this.volumehourto,
+        required this.openhour,
+        required this.highhour,
+        required this.lowhour,
+        required this.change24Hour,
+        required this.changepct24Hour,
+        required this.changeday,
+        required this.changepctday,
+        required this.changehour,
+        required this.changepcthour,
+        required this.conversiontype,
+        required this.conversionsymbol,
+        required this.supply,
+        required this.mktcap,
+        required this.mktcappenalty,
+        required this.circulatingsupply,
+        required this.circulatingsupplymktcap,
+        required this.totalvolume24Hto,
+        required this.totalvolume24H,
+        required this.totaltoptiervolume24Hto,
+        required this.totaltoptiervolume24H,
+        required this.imageurl,
+    });
+
+    String type;
+    String market;
+    String fromsymbol;
+    String tosymbol;
+    String flags;
+    double price;
+    int lastupdate;
+    double lastvolume;
+    double lastvolumeto;
+    String lasttradeid;
+    double volumeday;
+    double volumedayto;
+    double volume24Hour;
+    double volume24Hourto;
+    double openday;
+    double highday;
+    double lowday;
+    int open24Hour;
+    double high24Hour;
+    int low24Hour;
+    double volumehour;
+    double volumehourto;
+    double openhour;
+    double highhour;
+    double lowhour;
+    double change24Hour;
+    double changepct24Hour;
+    double changeday;
+    double changepctday;
+    int changehour;
+    double changepcthour;
+    String conversiontype;
+    String conversionsymbol;
+    int supply;
+    double mktcap;
+    int mktcappenalty;
+    int circulatingsupply;
+    double circulatingsupplymktcap;
+    int totalvolume24Hto;
+    int totalvolume24H;
+    int totaltoptiervolume24Hto;
+    int totaltoptiervolume24H;
+    String imageurl;
+
+    factory CurrentTradingInfo.fromJson(Map<String, dynamic> json) => CurrentTradingInfo(
+        type: json["TYPE"],
+        market: json["MARKET"],
+        fromsymbol: json["FROMSYMBOL"],
+        tosymbol: json["TOSYMBOL"],
+        flags: json["FLAGS"],
+        price: json["PRICE"].toDouble(),
+        lastupdate: json["LASTUPDATE"],
+        lastvolume: json["LASTVOLUME"].toDouble(),
+        lastvolumeto: json["LASTVOLUMETO"].toDouble(),
+        lasttradeid: json["LASTTRADEID"],
+        volumeday: json["VOLUMEDAY"].toDouble(),
+        volumedayto: json["VOLUMEDAYTO"].toDouble(),
+        volume24Hour: json["VOLUME24HOUR"].toDouble(),
+        volume24Hourto: json["VOLUME24HOURTO"].toDouble(),
+        openday: json["OPENDAY"].toDouble(),
+        highday: json["HIGHDAY"].toDouble(),
+        lowday: json["LOWDAY"].toDouble(),
+        open24Hour: json["OPEN24HOUR"],
+        high24Hour: json["HIGH24HOUR"].toDouble(),
+        low24Hour: json["LOW24HOUR"],
+        volumehour: json["VOLUMEHOUR"].toDouble(),
+        volumehourto: json["VOLUMEHOURTO"].toDouble(),
+        openhour: json["OPENHOUR"].toDouble(),
+        highhour: json["HIGHHOUR"].toDouble(),
+        lowhour: json["LOWHOUR"].toDouble(),
+        change24Hour: json["CHANGE24HOUR"].toDouble(),
+        changepct24Hour: json["CHANGEPCT24HOUR"].toDouble(),
+        changeday: json["CHANGEDAY"].toDouble(),
+        changepctday: json["CHANGEPCTDAY"].toDouble(),
+        changehour: json["CHANGEHOUR"],
+        changepcthour: json["CHANGEPCTHOUR"].toDouble(),
+        conversiontype: json["CONVERSIONTYPE"],
+        conversionsymbol: json["CONVERSIONSYMBOL"],
+        supply: json["SUPPLY"],
+        mktcap: json["MKTCAP"].toDouble(),
+        mktcappenalty: json["MKTCAPPENALTY"],
+        circulatingsupply: json["CIRCULATINGSUPPLY"],
+        circulatingsupplymktcap: json["CIRCULATINGSUPPLYMKTCAP"].toDouble(),
+        totalvolume24Hto: json["TOTALVOLUME24HTO"],
+        totalvolume24H: json["TOTALVOLUME24H"],
+        totaltoptiervolume24Hto: json["TOTALTOPTIERVOLUME24HTO"],
+        totaltoptiervolume24H: json["TOTALTOPTIERVOLUME24H"],
+        imageurl: json["IMAGEURL"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "TYPE": type,
+        "MARKET": market,
+        "FROMSYMBOL": fromsymbol,
+        "TOSYMBOL": tosymbol,
+        "FLAGS": flags,
+        "PRICE": price,
+        "LASTUPDATE": lastupdate,
+        "LASTVOLUME": lastvolume,
+        "LASTVOLUMETO": lastvolumeto,
+        "LASTTRADEID": lasttradeid,
+        "VOLUMEDAY": volumeday,
+        "VOLUMEDAYTO": volumedayto,
+        "VOLUME24HOUR": volume24Hour,
+        "VOLUME24HOURTO": volume24Hourto,
+        "OPENDAY": openday,
+        "HIGHDAY": highday,
+        "LOWDAY": lowday,
+        "OPEN24HOUR": open24Hour,
+        "HIGH24HOUR": high24Hour,
+        "LOW24HOUR": low24Hour,
+        "VOLUMEHOUR": volumehour,
+        "VOLUMEHOURTO": volumehourto,
+        "OPENHOUR": openhour,
+        "HIGHHOUR": highhour,
+        "LOWHOUR": lowhour,
+        "CHANGE24HOUR": change24Hour,
+        "CHANGEPCT24HOUR": changepct24Hour,
+        "CHANGEDAY": changeday,
+        "CHANGEPCTDAY": changepctday,
+        "CHANGEHOUR": changehour,
+        "CHANGEPCTHOUR": changepcthour,
+        "CONVERSIONTYPE": conversiontype,
+        "CONVERSIONSYMBOL": conversionsymbol,
+        "SUPPLY": supply,
+        "MKTCAP": mktcap,
+        "MKTCAPPENALTY": mktcappenalty,
+        "CIRCULATINGSUPPLY": circulatingsupply,
+        "CIRCULATINGSUPPLYMKTCAP": circulatingsupplymktcap,
+        "TOTALVOLUME24HTO": totalvolume24Hto,
+        "TOTALVOLUME24H": totalvolume24H,
+        "TOTALTOPTIERVOLUME24HTO": totaltoptiervolume24Hto,
+        "TOTALTOPTIERVOLUME24H": totaltoptiervolume24H,
+        "IMAGEURL": imageurl,
+    };
+}
