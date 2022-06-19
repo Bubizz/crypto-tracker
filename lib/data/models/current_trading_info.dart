@@ -2,8 +2,6 @@
 //
 //     final crypto = cryptoFromJson(jsonString);
 
-import 'package:meta/meta.dart';
-import 'dart:convert';
 
 
 class CurrentTradingInfo {
