@@ -16,9 +16,10 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: SafeArea(
         child:
-         BlocProvider(      
+        BlocProvider(      
         create: (context) => GlobalinfoBloc()..add(GetGlobalInfo()),
         child: DefaultTabController(
           length: 2,
@@ -31,11 +32,15 @@ class _HomePageState extends State<HomePage>
              ),
             Expanded(
                 child: TabBarView(children: [
-                  Container(
-                    color: Colors.amber,
-                    width: double.infinity,
-                    height: 20,
-                    child: const GlobalInfoSectionTab()),
+                  Column(
+                    children: [
+                      Container(
+                        color: Color.fromARGB(255, 34, 32, 32),
+                        width: double.infinity,
+                        child: const GlobalInfoSectionTab()),
+                          Expanded(child: Container(color: Colors.blue,))
+                    ],
+                  ),
                   
                   Container(
                     color: Colors.redAccent,
