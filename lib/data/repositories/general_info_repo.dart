@@ -3,7 +3,7 @@ import '../models/current_trading_info.dart';
 import '../models/global_info.dart';
 import '../API_providers/binance_api.dart';
 
-class MainInfoRepo
+class HomeInfoRepo
 {
   var binanceApi  = BinanceAPI();
 

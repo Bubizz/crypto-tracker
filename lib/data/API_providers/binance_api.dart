@@ -8,7 +8,7 @@ class BinanceAPI
   Future<String> fetchGlobalInfo() async
   {
   
-     var url = Uri.parse('$binanceBaseURL/v1/global-metrics/quotes/historical}');
+     var url = Uri.parse('$binanceBaseURL/v1/global-metrics/quotes/latest');
 
      var data = await http.get(url, headers: {'X-CMC_PRO_API_KEY' : APIKEYS.coinMarketcapAPIkey } );
 

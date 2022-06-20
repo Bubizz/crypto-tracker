@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:track_crypto/logic/bloc/globalinfo_bloc.dart';
 import 'package:track_crypto/ui/widgets/custom_tab_bar.dart';
+import '../widgets/home_page_screen/global_info_section.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,6 +17,9 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
+        child:
+         BlocProvider(      
+        create: (context) => GlobalinfoBloc()..add(GetGlobalInfo()),
         child: DefaultTabController(
           length: 2,
           child: Column(
@@ -29,7 +35,8 @@ class _HomePageState extends State<HomePage>
                     color: Colors.amber,
                     width: double.infinity,
                     height: 20,
-                  ),
+                    child: const GlobalInfoSectionTab()),
+                  
                   Container(
                     color: Colors.redAccent,
                     width: double.infinity,
@@ -40,6 +47,7 @@ class _HomePageState extends State<HomePage>
             ],
           ),
         ),
+      ),
       ),
     );
   }
