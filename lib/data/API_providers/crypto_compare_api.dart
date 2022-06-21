@@ -11,6 +11,7 @@ class CryptoCompareAPI
 
     var data = await http.get(url, headers: {'authorization': 'Apikey ${APIKEYS.cryptoCompareAPIkey}'});
 
+
      if(data.statusCode == 200)
      {
        return data.body;

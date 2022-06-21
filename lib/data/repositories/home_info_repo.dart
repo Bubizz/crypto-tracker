@@ -1,5 +1,7 @@
+import 'dart:convert';
+
 import 'package:track_crypto/data/API_providers/crypto_compare_api.dart';
-import '../models/current_trading_info.dart';
+import '../models/coin.dart';
 import '../models/global_info.dart';
 import '../API_providers/binance_api.dart';
 
@@ -24,13 +26,25 @@ class HomeInfoRepo
 
   }
 
-  Future<CurrentTradingInfo> getTopCurrencies(int page) async 
+  Future<List<Coin>> getTopCurrencies(int page) async 
   {
+    var list = <Coin>[];
     try
     {
       var rawData = await cryptoApi.fetchTopCurrencies(page);
 
-      return CurrentTradingInfo.fromJson(rawData);
+      var mapFromRawData = jsonDecode(rawData) as Map<String, dynamic>;
+    
+
+      
+
+      for(var coin in mapFromRawData["Data"])
+      {
+        list.add(Coin.fromJson(coin));
+      }
+
+    return list;
+
     }
     catch(e)
     {
