@@ -11,11 +11,91 @@ import '../widgets/home_page_screen/global_info_section.dart';
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
 
-
   var _items = <Coin>[];
+  String dropdownValue = 'Market Cap';
+  String displayedCurrency = 'USD';
 
   void _fetchdata(BuildContext context) {
     BlocProvider.of<TopcoinsBloc>(context).add(GetCurrencies());
+  }
+
+  Widget _buildErrorUI(BuildContext context) {
+    return Center(
+      child: Column(
+        children: [
+          Image.asset(
+            'assets/cloud.png',
+            color: Colors.white,
+          ),
+          TextButton(
+              onPressed: () {
+                BlocProvider.of<TopcoinsBloc>(context).add(GetCurrencies());
+                BlocProvider.of<GlobalinfoBloc>(context).add(GetGlobalInfo());
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(Icons.refresh),
+                  Text(
+                    'Something went wrong',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ],
+              ))
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDropDown(BuildContext context) {
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return DropdownButton<String>(
+            value: dropdownValue,
+            elevation: 16,
+            style: const TextStyle(color: Colors.deepPurple),
+            underline: Container(
+              height: 0.5,
+              color: Colors.deepPurpleAccent,
+            ),
+            onChanged: (String? newValue) {
+              setState(() {
+                dropdownValue = newValue!;
+              });
+            },
+            items: const [
+              DropdownMenuItem(value: '24h Volume', child: Text('24h Volume')),
+              DropdownMenuItem(value: 'Market Cap', child: Text('Market Cap'))
+            ]);
+      },
+    );
+  }
+
+   Widget _changeCurrencyDropDown(BuildContext context) {
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return DropdownButton<String>(
+            value: displayedCurrency,
+            elevation: 16,
+            style: const TextStyle(color: Colors.deepPurple),
+            underline: Container(
+              height: 0.5,
+              color: Colors.deepPurpleAccent,
+            ),
+            onChanged: (String? newValue) {
+              setState(() {
+                displayedCurrency = newValue!;
+                BlocProvider.of<TopcoinsBloc>(context).add(ChangeDisplayedCurrency(displayedCurrency));
+              });
+            },
+            items: const [
+              DropdownMenuItem(value: 'PLN', child: Text('PLN')),
+              DropdownMenuItem(value: 'USD', child: Text('USD')),
+              DropdownMenuItem(value: 'EUR', child: Text('EUR')),
+              DropdownMenuItem(value: 'BTC', child: Text('BTC')),
+            ]);
+      },
+    );
   }
 
   @override
@@ -52,10 +132,27 @@ class HomePage extends StatelessWidget {
                             color: const Color.fromARGB(255, 34, 32, 32),
                             width: double.infinity,
                             child: const GlobalInfoSectionTab()),
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.28,
+                          color: const Color.fromARGB(255, 34, 32, 32),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Toplist by ',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              _buildDropDown(context),
+                              Text('Displayed Currency',  style: TextStyle(color: Colors.white),),
+                              _changeCurrencyDropDown(context)
+                            ],
+                          ),
+                        ),
                         Expanded(
                           child: BlocBuilder<TopcoinsBloc, TopcurrenciesState>(
-                            builder: (context, state) {       
-                              if (state is TopcurrenciesLoaded || state is TopcurrenciesLoading) {
+                            builder: (context, state) {
+                              if (state is TopcurrenciesLoaded ||
+                                  state is TopcurrenciesLoading) {
                                 _items = state.topcurrencies;
                                 return InfiniteList(
                                     isLoading: state is TopcurrenciesLoading,
@@ -67,38 +164,20 @@ class HomePage extends StatelessWidget {
                                           const SizedBox(
                                             height: 4,
                                           ),
-                                          CoinListTile(
-                                              _items[index], '${(index + 1)} .'),
+                                          CoinListTile(_items[index],
+                                              '${(index + 1)} .'),
                                           const SizedBox(
                                             height: 4,
                                           )
                                         ],
                                       );
                                     });
-                              } 
-                              else {
-                                return Center(child: Column(
-                                  children: [
-                                    Image.asset('assets/cloud.png',
-                                    color: Colors.white, ),
-                                    TextButton(onPressed: () {
-                                      BlocProvider.of<TopcoinsBloc>(context).add(GetCurrencies()); 
-                                      BlocProvider.of<GlobalinfoBloc>(context).add(GetGlobalInfo());}, 
-                                      child: Row(
-                                      mainAxisAlignment : MainAxisAlignment.center,
-                                      children: const [
-                                        Icon(Icons.refresh),
-                                        Text('Something went wrong', style: TextStyle(color: Colors.white),),
-                                      ],
-                                    ))
-                                  ],
-
-                                ),);
-                                
+                              } else {
+                                return _buildErrorUI(context);
                               }
                             },
                           ),
-                        )
+                        ),
                       ],
                     ),
                     Container(

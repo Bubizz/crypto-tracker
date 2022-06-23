@@ -9,12 +9,16 @@ class CoinListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isNegative = coin.display.usd.changeday[2] == '-';
+    bool isNegative = coin.display.usd.change24Hour[coin.display.usd.change24Hour.indexOf(' ') + 1] == '-';
     var coinName = coin.coinInfo.name;
     var imageUrl = 'https://cryptocompare.com${coin.coinInfo.imageUrl}';
-    var priceGrow = isNegative ? coin.display.usd.changeday : '+${coin.display.usd.changeday}' ;
-    var priceGrowPct = isNegative ? coin.display.usd.changepct24Hour : '+${coin.display.usd.changepct24Hour}' ;
+    var priceGrow = isNegative ? coin.display.usd.change24Hour : '+ ${coin.display.usd.change24Hour}' ;
+    var priceGrowPct = isNegative ? coin.display.usd.changepct24Hour : '+ ${coin.display.usd.changepct24Hour}' ;
     var currentPrice = coin.display.usd.price;
+
+    
+    
+    
     
 
     return Padding(

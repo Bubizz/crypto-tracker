@@ -26,11 +26,12 @@ class HomeInfoRepo
 
   }
 
-  Future<List<Coin>> getTopCurrencies(int page) async 
+  Future<List<Coin>> getTopCurrencies(int page, String currencyIso) async 
   {
     var list = <Coin>[];
-    
-      var rawData = await cryptoApi.fetchTopCurrencies(page);  
+      try
+      {
+        var rawData = await cryptoApi.fetchTopCurrencies(page, currencyIso);  
 
       var mapFromRawData = jsonDecode(rawData) as Map<String, dynamic>;
 
@@ -38,10 +39,18 @@ class HomeInfoRepo
       {
         if((coin as Map<String,dynamic>).containsKey("DISPLAY"))
         {
-           list.add(Coin.fromJson(coin));
+           list.add(Coin.fromJson(coin, currencyIso));
         }
         
       }
+
+      }
+      catch(e)
+      {
+        rethrow;
+      }
+    
+      
 
     return list;
 

@@ -1,10 +1,4 @@
 
-import 'dart:convert';
-
-Coin coinFromJson(Map<String, dynamic> str) => Coin.fromJson(str);
-
-String coinToJson(Coin data) => json.encode(data.toJson());
-
 class Coin {
     Coin({
         required this.coinInfo,
@@ -14,15 +8,10 @@ class Coin {
     CoinInfo coinInfo;
     Display display;
 
-    factory Coin.fromJson(Map<String, dynamic> json) => Coin(
+    factory Coin.fromJson(Map<String, dynamic> json, String displayedCurrency) => Coin(
         coinInfo: CoinInfo.fromJson(json["CoinInfo"]),
-        display: Display.fromJson(json["DISPLAY"]),
+        display: Display.fromJson(json["DISPLAY"], displayedCurrency),
     );
-
-    Map<String, dynamic> toJson() => {
-        "CoinInfo": coinInfo.toJson(),
-        "DISPLAY": display.toJson(),
-    };
 }
 
 class CoinInfo {
@@ -71,13 +60,10 @@ class Display {
 
     DisplayUsd usd;
 
-    factory Display.fromJson(Map<String, dynamic> json) => Display(
-        usd: DisplayUsd.fromJson(json["USD"]),
+    factory Display.fromJson(Map<String, dynamic> json, String displayedCurrency) => Display(
+        usd: DisplayUsd.fromJson(json[displayedCurrency]),
     );
 
-    Map<String, dynamic> toJson() => {
-        "USD": usd.toJson(),
-    };
 }
 
 class DisplayUsd {
