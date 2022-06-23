@@ -1,6 +1,6 @@
 # track_crypto
 
-A new Flutter project.
+Always keep up with current coin prices and never miss opportunity to get rich.
 
 ## Getting Started
 
