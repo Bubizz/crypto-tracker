@@ -7,7 +7,7 @@ class CryptoCompareAPI
 
  Future fetchTopCurrencies(int page) async
   {
-    var url = Uri.parse('$cryptoCompareBaseURL/top/mktcapfull?limit=10&tsym=USD&page=$page');
+    var url = Uri.parse('$cryptoCompareBaseURL/top/mktcapfull?limit=20&tsym=USD&page=$page');
 
     var data = await http.get(url, headers: {'authorization': 'Apikey ${APIKEYS.cryptoCompareAPIkey}'});
 

@@ -18,8 +18,6 @@ class GlobalinfoBloc extends Bloc<GlobalinfoEvent, GlobalinfoState> {
 
         final globalInfo = await HomeInfoRepo().getGlobalInfo();
 
-        
-
         emit(GlobalInfoLoaded(globalInfo));
 
         

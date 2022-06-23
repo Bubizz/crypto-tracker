@@ -7,31 +7,34 @@ part 'topcurrencies_state.dart';
 
 
 class TopcoinsBloc extends Bloc<TopCurrenciesEvent, TopcurrenciesState> {
-  TopcoinsBloc() : super(const TopcurrenciesLoading(0)) {
+  TopcoinsBloc() : super(const TopcurrenciesLoading(0, [])) {
     on<TopCurrenciesEvent>((event, emit) async {
 
 
       if(event is GetCurrencies)
       {
-        emit(TopcurrenciesLoading(state.page));
+        emit(TopcurrenciesLoading(state.page, state.topcurrencies));
 
-        try
-        {
-          print("www");
+          try
+          {
+
           final currencies = await HomeInfoRepo().getTopCurrencies(state.page);
-          print(currencies.toString() + "rrrrrrrrrrrrrrrrrrrrrrrrr");
-          emit(TopcurrenciesLoaded(currencies, state.page + 1));
+          
+          emit(TopcurrenciesLoaded(state.page + 1, state.topcurrencies + currencies, ));
 
+          }
+          catch(e)
+          {
+            emit(TopcurrenciesError(state.page, state.topcurrencies));
+          }
+          
+
+      
 
         }
-        catch(e)
-        {
-          print("error");
-          emit(TopcurrenciesError(state.page));
-        }
-        
+       
       }
 
-    });
+    );
   }
 }

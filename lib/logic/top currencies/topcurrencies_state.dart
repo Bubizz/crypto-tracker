@@ -3,27 +3,26 @@ part of 'topcurrencies_bloc.dart';
 @immutable
 abstract class TopcurrenciesState {
 
-  const TopcurrenciesState(this.page);
+  const TopcurrenciesState(this.page, this.topcurrencies);
 
   final int page;
+  final List<Coin> topcurrencies;
 }
 
 class TopcurrenciesError extends TopcurrenciesState 
 {
-  const TopcurrenciesError(int page) : super(page);
+  const TopcurrenciesError(int page, List<Coin> list ) : super(page, list);
 }
 
 class TopcurrenciesLoading extends TopcurrenciesState {
-  const TopcurrenciesLoading(int page) : super(page);
+
+  const TopcurrenciesLoading(int page, List<Coin> list ) : super(page, list);
 }
 
 
 class TopcurrenciesLoaded extends TopcurrenciesState
 {
-  
-  final List<Coin> topcurrencies;
-
-  const TopcurrenciesLoaded(this.topcurrencies, int page) : super(page);
+  const TopcurrenciesLoaded(int page, List<Coin> list) : super(page, list);
 }
 
 
