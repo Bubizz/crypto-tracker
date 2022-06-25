@@ -37,6 +37,7 @@ dependencies:
   http: ^0.13.4
   flutter_bloc: ^8.0.1
   very_good_infinite_list: ^0.4.1
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
   flutter_test:

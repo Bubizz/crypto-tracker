@@ -20,13 +20,13 @@ class GlobalInfoSectionTab extends StatelessWidget {
                 gradient: LinearGradient(begin: Alignment.topCenter, 
                 colors: hasGrown ? 
                 [
-                Color.fromARGB(255, 94, 181, 97).withOpacity(.8),
-                Color.fromARGB(255, 139, 199, 142)
+                const Color.fromARGB(255, 94, 181, 97).withOpacity(.8),
+                const Color.fromARGB(255, 139, 199, 142)
                 ] : 
                 [
-                Color.fromARGB(255, 235, 20, 20).withOpacity(.8),
-                Color.fromARGB(255, 243, 52, 52).withOpacity(.75),
-                Color.fromARGB(255, 211, 83, 83)
+                const Color.fromARGB(255, 235, 20, 20).withOpacity(.8),
+                const Color.fromARGB(255, 243, 52, 52).withOpacity(.75),
+                const Color.fromARGB(255, 211, 83, 83)
                 
                 ])
             ) 

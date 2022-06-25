@@ -1,68 +1,56 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:track_crypto/data/repositories/home_info_repo.dart';
+import '../../data/repositories/home_info_repo.dart';
+import '../home list controls/home_screen_controls_bloc.dart';
 import '../../data/models/coin.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 part 'topcurrencies_event.dart';
 part 'topcurrencies_state.dart';
 
-
 class TopcoinsBloc extends Bloc<TopCurrenciesEvent, TopcurrenciesState> {
-  TopcoinsBloc() : super(const TopcurrenciesLoading(0, [], 'USD')) {
-    on<TopCurrenciesEvent>((event, emit) async {
+  final HomeScreenListControlsBloc homeScreenListControlsBloc;
 
-
-      if(event is GetCurrencies)
+  TopcoinsBloc(this.homeScreenListControlsBloc)
+      : super(const TopcurrenciesLoading(0, [])) {
+    homeScreenListControlsBloc.stream
+        .listen((HomeScreenListControlsState event) 
       {
-        emit(TopcurrenciesLoading(state.page, state.topcurrencies, state.displayedCurrency));
 
-          try
-          {
+        emit(const TopcurrenciesLoading(0, []));
 
-          final currencies = await HomeInfoRepo().getTopCurrencies(state.page, state.displayedCurrency);
-          
-          emit(TopcurrenciesLoaded(state.page + 1, state.topcurrencies + currencies, state.displayedCurrency));
+        add(GetCurrencies());
+    });
 
-          }
-          catch(e)
-          {
-            emit(TopcurrenciesError(state.page, state.topcurrencies, state.displayedCurrency));
-          }
-        }
-        else if(event is ChangeDisplayedCurrency)
+    on<TopCurrenciesEvent>((event, emit) async {
+      if (event is GetCurrencies) 
+      {
+
+        emit(TopcurrenciesLoading(state.page, state.topcurrencies));
+
+        try 
         {
-          try
+
+          if (homeScreenListControlsBloc.state.topListBy == TopListBy.marketCap)
           {
-          emit(TopcurrenciesLoaded(0, const [], state.displayedCurrency));
 
-          print(event.newDisplayedCurrency);
+            final coins = await HomeInfoRepo().getTopCurrencies( state.page, homeScreenListControlsBloc.state.displayedCurrency);
 
-          final currencies = await HomeInfoRepo().getTopCurrencies(state.page, event.newDisplayedCurrency);
+            emit(TopcurrenciesLoaded(state.page + 1, state.topcurrencies + coins));
 
-          print(currencies[0].display.usd.changeday);
+          } else if(homeScreenListControlsBloc.state.topListBy == TopListBy.volume)
+          {
 
-          emit(TopcurrenciesLoaded(state.page + 1, state.topcurrencies + currencies, state.displayedCurrency));
+            final coins = await HomeInfoRepo().getTopCurrenciesByVolume(state.page, homeScreenListControlsBloc.state.displayedCurrency);
 
-          print(state.displayedCurrency);
-
+            emit(TopcurrenciesLoaded(state.page + 1, state.topcurrencies + coins));
 
           }
-          catch(e)
-          {
-            emit(TopcurrenciesError(state.page, state.topcurrencies, state.displayedCurrency));
-          }
-          
+        } 
+        catch (e) 
+        {
 
-
-
-
-
-
+          emit(TopcurrenciesError(state.page, state.topcurrencies));
         }
-       
-      }
-
-    );
+      } 
+    });
   }
 }

@@ -50,13 +50,34 @@ class HomeInfoRepo
         rethrow;
       }
     
-      
-
     return list;
+  }
 
+  Future<List<Coin>> getTopCurrenciesByVolume(int page, String currencyIso) async 
+  {
+    var list = <Coin>[];
+      try
+      {
+        var rawData = await cryptoApi.fetchTopCurrenciesBy24hVolume(page, currencyIso);  
+
+        var mapFromRawData = jsonDecode(rawData) as Map<String, dynamic>;
+
+      for(var coin in mapFromRawData["Data"])
+      {
+        if((coin as Map<String,dynamic>).containsKey("DISPLAY"))
+        {
+           list.add(Coin.fromJson(coin, currencyIso));
+        }
+        
+      }
+
+      }
+      catch(e)
+      {
+        rethrow;
+      }
     
-  
-
+    return list;
   }
 
 }

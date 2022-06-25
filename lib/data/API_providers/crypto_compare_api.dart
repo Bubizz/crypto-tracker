@@ -23,6 +23,24 @@ class CryptoCompareAPI
 
   }
 
+  Future fetchTopCurrenciesBy24hVolume(int page, String currencyIso) async
+  {
+    var url = Uri.parse('$cryptoCompareBaseURL/top/totalvolfull?limit=20&tsym=$currencyIso&page=$page');
+
+    var data = await http.get(url, headers: {'authorization': 'Apikey ${APIKEYS.cryptoCompareAPIkey}'});
+
+
+     if(data.statusCode == 200)
+     {
+       return data.body;
+     }
+     else
+     {
+       throw Exception("${data.statusCode}");
+     }
+
+  }
+
 }
 
 

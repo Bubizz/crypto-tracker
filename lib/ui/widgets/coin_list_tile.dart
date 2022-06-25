@@ -25,7 +25,7 @@ class CoinListTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: ListTile(
       
-        tileColor: Color.fromARGB(255, 54, 60, 63),
+        tileColor: const Color.fromARGB(255, 54, 60, 63),
         leading: Row(
           mainAxisSize : MainAxisSize.min,
           children: [
