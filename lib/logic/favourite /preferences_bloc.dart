@@ -18,6 +18,8 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
         SharedPrefs().setFavouriteCoin(event.coinCode);
         emit(PreferencesState(state.favCoins));
 
+       
+
       }
       else if(event is RemoveCoinFromFav)
       {

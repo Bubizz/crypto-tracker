@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:track_crypto/data/models/coin.dart';
 import 'package:track_crypto/logic/home%20list%20controls/home_screen_controls_bloc.dart';
+import 'package:track_crypto/ui/screens/watchlist.dart';
 import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 import '../../logic/home list controls/home_screen_controls_bloc.dart';
 import '../../logic/bloc/globalinfo_bloc.dart';
@@ -56,7 +57,7 @@ class HomePage extends StatelessWidget {
         return DropdownButton<TopListBy>(
             value: dropdownValue,
             elevation: 16,
-            style: const TextStyle(color: Colors.deepPurple),
+            style: const TextStyle(color: Colors.deepPurple, fontSize: 16),
             underline: Container(
               height: 0.5,
               color: Colors.deepPurpleAccent,
@@ -64,12 +65,15 @@ class HomePage extends StatelessWidget {
             onChanged: (newValue) {
               setState(() {
                 dropdownValue = newValue!;
-                 BlocProvider.of<HomeScreenListControlsBloc>(context).add(ChangeListData(newValue));
+                BlocProvider.of<HomeScreenListControlsBloc>(context)
+                    .add(ChangeListData(newValue));
               });
             },
             items: const [
-              DropdownMenuItem(value: TopListBy.volume, child: Text('24h Volume')),
-              DropdownMenuItem(value: TopListBy.marketCap, child: Text('Market Cap'))
+              DropdownMenuItem(
+                  value: TopListBy.volume, child: Text('24h Volume')),
+              DropdownMenuItem(
+                  value: TopListBy.marketCap, child: Text('Market Cap'))
             ]);
       },
     );
@@ -81,7 +85,7 @@ class HomePage extends StatelessWidget {
         return DropdownButton<String>(
             value: displayedCurrency,
             elevation: 16,
-            style: const TextStyle(color: Colors.deepPurple),
+            style: const TextStyle(color: Colors.deepPurple, fontSize: 16),
             underline: Container(
               height: 0.5,
               color: Colors.deepPurpleAccent,
@@ -97,6 +101,8 @@ class HomePage extends StatelessWidget {
             },
             items: const [
               DropdownMenuItem(value: 'PLN', child: Text('PLN')),
+              DropdownMenuItem(value: 'GBP', child: Text('GBP')),
+              DropdownMenuItem(value: 'CNY', child: Text('CNY')),
               DropdownMenuItem(value: 'USD', child: Text('USD')),
               DropdownMenuItem(value: 'EUR', child: Text('EUR')),
               DropdownMenuItem(value: 'BTC', child: Text('BTC')),
@@ -112,13 +118,18 @@ class HomePage extends StatelessWidget {
       body: SafeArea(
         child: MultiBlocProvider(
           providers: [
-              BlocProvider(
+            BlocProvider(
               create: (context) => PreferencesBloc(),
             ),
             BlocProvider(
               create: (context) => GlobalinfoBloc()..add(GetGlobalInfo()),
             ),
             BlocProvider(create: (context) => HomeScreenListControlsBloc()),
+
+            BlocProvider(
+                create: (context) => TopcoinsBloc(
+                    BlocProvider.of<HomeScreenListControlsBloc>(context))
+                  ..add(GetCurrencies())),
           ],
           child: DefaultTabController(
             length: 2,
@@ -132,81 +143,71 @@ class HomePage extends StatelessWidget {
                     text: 'Watchlist',
                   ),
                 ]),
-                BlocProvider(
-                  create: (context) => TopcoinsBloc(
-                      BlocProvider.of<HomeScreenListControlsBloc>(context))
-                    ..add(GetCurrencies()),
-                  child: Expanded(
-                    child: TabBarView(children: [
-                      Column(
-                        children: [
-                          Container(
-                              color: const Color.fromARGB(255, 34, 32, 32),
-                              width: double.infinity,
-                              child: const GlobalInfoSectionTab()),
-                          Container(
-                            height: MediaQuery.of(context).size.height * 0.28,
+                Expanded(
+                  child: TabBarView(children: [
+                    Column(
+                      children: [
+                        Container(
                             color: const Color.fromARGB(255, 34, 32, 32),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 12),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    'Toplist by ',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  _buildDropDown(context),
-                                  const Text(
-                                    'Displayed Currency',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  _changeCurrencyDropDown(context)
-                                ],
-                              ),
+                            width: double.infinity,
+                            child: const GlobalInfoSectionTab()),
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.28,
+                          color: const Color.fromARGB(255, 34, 32, 32),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  'Toplist by ',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                _buildDropDown(context),
+                                const Text(
+                                  'Displayed Currency',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                _changeCurrencyDropDown(context)
+                              ],
                             ),
                           ),
-                          Expanded(
-                            child:
-                                BlocBuilder<TopcoinsBloc, TopcurrenciesState>(
-                              builder: (context, state) {
-                                if (state is TopcurrenciesLoaded ||
-                                    state is TopcurrenciesLoading) {
-                                  _items = state.topcurrencies;
-                                  return InfiniteList(
-                                      isLoading: state is TopcurrenciesLoading,
-                                      itemCount: _items.length,
-                                      onFetchData: () => _fetchdata(context),
-                                      itemBuilder: (context, index) {
-                                        return Column(
-                                          children: [
-                                            const SizedBox(
-                                              height: 4,
-                                            ),
-                                            CoinListTile(_items[index],
-                                                '${(index + 1)} .'),
-                                            const SizedBox(
-                                              height: 4,
-                                            )
-                                          ],
-                                        );
-                                      });
-                                } else {
-                                  return _buildErrorUI(context);
-                                }
-                              },
-                            ),
+                        ),
+                        Expanded(
+                          child: BlocBuilder<TopcoinsBloc, TopcurrenciesState>(
+                            builder: (context, state) {
+                              if (state is TopcurrenciesLoaded ||
+                                  state is TopcurrenciesLoading) {
+                                _items = state.topcurrencies;
+                                return InfiniteList(
+                                    isLoading: state is TopcurrenciesLoading,
+                                    itemCount: _items.length,
+                                    onFetchData: () => _fetchdata(context),
+                                    itemBuilder: (context, index) {
+                                      return Column(
+                                        children: [
+                                          const SizedBox(
+                                            height: 4,
+                                          ),
+                                          CoinListTile(_items[index],
+                                              '${(index + 1)} .'),
+                                          const SizedBox(
+                                            height: 4,
+                                          )
+                                        ],
+                                      );
+                                    });
+                              } else {
+                                return _buildErrorUI(context);
+                              }
+                            },
                           ),
-                        ],
-                      ),
-                      Container(
-                        color: Colors.redAccent,
-                        width: double.infinity,
-                        height: 20,
-                      ),
-                    ]),
-                  ),
-                )
+                        ),
+                      ],
+                    ),
+                   const Watchlist()
+                  ]),
+                ),
               ],
             ),
           ),
