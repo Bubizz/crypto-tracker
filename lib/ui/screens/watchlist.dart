@@ -12,7 +12,7 @@ class Watchlist extends StatelessWidget {
     return BlocBuilder<PreferencesBloc, PreferencesState>(
       builder: (context, state) {
 
-        var favCoinsCodes =BlocProvider.of<PreferencesBloc>(context).state.favCoins;
+        var favCoinsCodes = BlocProvider.of<PreferencesBloc>(context).state.favCoins;
 
         var favCoins = BlocProvider.of<TopcoinsBloc>(context).state.topcurrencies.where((element) => favCoinsCodes.contains(element.coinInfo.name)).toList();
         

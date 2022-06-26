@@ -41,7 +41,31 @@ class CryptoCompareAPI
 
   }
 
+  Future fetchHourPricePoints() async
+  {
+    var url = Uri.parse('https://min-api.cryptocompare.com/data/v2/histohour?fsym=BTC&tsym=USD&limit=120');
+
+    var data = await http.get(url, headers: {'authorization': 'Apikey ${APIKEYS.cryptoCompareAPIkey}'});
+
+    if(data.statusCode == 200)
+     {
+       return data.body;
+     }
+     else
+     {
+       throw Exception("${data.statusCode}");
+     }
+
+
+
+
+    
+
+  }
+
 }
+
+
 
 
 

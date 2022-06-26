@@ -5,7 +5,7 @@ import 'package:track_crypto/logic/home%20list%20controls/home_screen_controls_b
 import 'package:track_crypto/ui/screens/watchlist.dart';
 import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 import '../../logic/home list controls/home_screen_controls_bloc.dart';
-import '../../logic/bloc/globalinfo_bloc.dart';
+import '../../logic/globalinfo/globalinfo_bloc.dart';
 import '../../logic/top%20currencies/topcurrencies_bloc.dart';
 import '../../ui/widgets/coin_list_tile.dart';
 import '../../ui/widgets/custom_tab_bar.dart';
