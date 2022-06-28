@@ -38,8 +38,6 @@ dependencies:
   flutter_bloc: ^8.0.1
   very_good_infinite_list: ^0.4.1
   shared_preferences: ^2.0.15
-  fl_chart: ^0.55.0
-
 
 dev_dependencies:
   flutter_test:
