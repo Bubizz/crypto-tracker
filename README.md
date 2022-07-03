@@ -2,8 +2,8 @@
 
 Always keep up with current coin prices and never miss opportunity to get rich.
 
-![Alt text](relative/path/to/ss1)
-![Alt text](relative/path/to/ss2)
+![Screenshot](ss1)
+![Screenshot](ss2)
 
 ## Getting Started
 
