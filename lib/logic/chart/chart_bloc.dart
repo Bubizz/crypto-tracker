@@ -10,22 +10,24 @@ class ChartBloc extends Bloc<ChartEvent, ChartState> {
   ChartBloc() : super((ChartState(points: [], minX: 0, maxX: 5, minY: 0, maxY: 0))) {
 
     on<ChartEvent>((event, emit) async {
-      if(event is GetWeekData)
+      if(event is GetData)
       {
-        var chartData = await ChartRepo().getHourPrices();
+        try
+        {
+          var chartData = await ChartRepo().getHourPrices(event.coinCode, event.days);
 
-        var lowestPrices = <double>[];
-        var highiestPrices = <double>[];
+          var prices = chartData.map((e) => e.open.toDouble()).toList();
+      
+          var time = chartData.map((e) => e.time.toDouble()).toList();
 
-        chartData.forEach((element) { 
-          lowestPrices.add(element.low);
-        });
+          emit(ChartState(points: chartData, minX: time.reduce((value, element) => min(value, element)), maxX: time.reduce((value, element) => max(value, element)), minY: prices.reduce((value, element) => min(value, element)), maxY: prices.reduce((value, element) => max(value, element))));
 
-        chartData.forEach((element) { 
-          highiestPrices.add(element.high);
-        });
-
-        emit(ChartState(points: chartData, minX: 0, maxX: 5, minY: lowestPrices.reduce((value, element) => min(value, element)), maxY: highiestPrices.reduce((value, element) => max(value, element))));
+        }
+        catch(e)
+        {
+          emit(ChartState(points: [], minX: 0, maxX: 0, minY: 0, maxY: 0));
+        }
+      
       }
     });
   }

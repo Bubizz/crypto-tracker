@@ -7,12 +7,12 @@ class ChartRepo
 {
    final api = CryptoCompareAPI();
 
-  Future<List<ChartPoint>> getHourPrices() async
+  Future<List<ChartPoint>> getHourPrices(String coinCode, int hours) async
   {
    
     var list = <ChartPoint>[];
 
-    final prices = await api.fetchHourPricePoints();
+    final prices = await api.fetchHourPricePoints(coinCode, hours);
     
     final map = jsonDecode(prices) as Map<String,dynamic>;
 

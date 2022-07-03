@@ -41,9 +41,10 @@ class CryptoCompareAPI
 
   }
 
-  Future fetchHourPricePoints() async
+  Future fetchHourPricePoints(String coinCode, int hours) async
   {
-    var url = Uri.parse('https://min-api.cryptocompare.com/data/v2/histohour?fsym=BTC&tsym=USD&limit=120');
+    var url = Uri.parse('https://min-api.cryptocompare.com/data/v2/histohour?fsym=$coinCode&tsym=USD&limit=$hours');
+
 
     var data = await http.get(url, headers: {'authorization': 'Apikey ${APIKEYS.cryptoCompareAPIkey}'});
 
@@ -55,11 +56,6 @@ class CryptoCompareAPI
      {
        throw Exception("${data.statusCode}");
      }
-
-
-
-
-    
 
   }
 
