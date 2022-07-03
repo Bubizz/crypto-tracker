@@ -36,7 +36,6 @@ class CoinListTile extends StatelessWidget {
             {
               return  IconButton(
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder:(context) => ChartDetailsPage()));
                   BlocProvider.of<PreferencesBloc>(context)
                       .add(RemoveCoinFromFav(coinName));
                 },
@@ -56,19 +55,22 @@ class CoinListTile extends StatelessWidget {
            
           
         ),
-        leading: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(coinPosition, style: const TextStyle(color: Colors.white)),
-            const SizedBox(
-              width: 4,
-            ),
-            Image.network(
-              imageUrl,
-              width: 38,
-              height: 38,
-            ),
-          ],
+        leading: GestureDetector(
+          onTap: () => Navigator.of(context).push(MaterialPageRoute(builder:(context) => ChartDetailPage(imageUrl: 'https://cryptocompare.com${coin.coinInfo.imageUrl}', coinName: coinName,))),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(coinPosition, style: const TextStyle(color: Colors.white)),
+              const SizedBox(
+                width: 4,
+              ),
+              Image.network(
+                imageUrl,
+                width: 38,
+                height: 38,
+              ),
+            ],
+          ),
         ),
         title: Column(
           children: [
