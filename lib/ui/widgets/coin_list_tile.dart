@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:track_crypto/data/models/coin.dart';
 import 'package:track_crypto/logic/favourite%20/preferences_bloc.dart';
-import 'package:track_crypto/ui/screens/chart_details_page.dart';
+import '../screens/chart_details_page.dart';
 
 class CoinListTile extends StatelessWidget {
   Coin coin;

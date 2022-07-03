@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../logic/globalinfo/globalinfo_bloc.dart';
+import '../../../logic/bloc/globalinfo_bloc.dart';
 
 class GlobalInfoSectionTab extends StatelessWidget {
   const GlobalInfoSectionTab({Key? key}) : super(key: key);
